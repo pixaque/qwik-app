@@ -1,4 +1,4 @@
-import { component$, useClientEffect$, useStore, useServerMount$ } from '@builder.io/qwik';
+import { component$, useClientEffect$, useStore, useWatch$ } from '@builder.io/qwik';
 import { useContent, Link, useLocation } from '@builder.io/qwik-city';
 import {getCartItems} from '~/components/cart/cart';
 import {cartProducts, cartCount} from '~/components/var/global'
@@ -8,18 +8,27 @@ export default component$(() => {
   const { menu } = useContent();
   const loc = useLocation();
   const store = useStore({
-    count: cartCount,
+    count: 0,
   });
 
-  useClientEffect$(() => {
+  useClientEffect$(({track}) => {
+    /*
+    track(() => store.count);
+
+    const update = () => {
+      store.count = getCartItems(cartProducts);
+    };
+    update();
+*/
+    
     const update = () => {
       store.count = getCartItems(cartProducts);
     };
     update();
     const tmrId = setInterval(update, 500);
     return () => clearInterval(tmrId);
+    
   });
-
   return (
     
     <>

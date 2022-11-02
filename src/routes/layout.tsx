@@ -6,9 +6,9 @@ export default component$(() => {
   return (
     <>
       <Header />
-      <main>
+
         <Slot />
-      </main>
+
       <Footer />
     </>
   );

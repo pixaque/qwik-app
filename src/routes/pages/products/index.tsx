@@ -1,4 +1,6 @@
-import { Resource, component$, useWatch$, useStore, useResource$} from '@builder.io/qwik';
+import { Resource, component$, useStore, useResource$} from '@builder.io/qwik';
+import type { DocumentHead, DocumentMeta } from '@builder.io/qwik-city';
+import { Link } from '@builder.io/qwik-city';
 
 export default component$(() => {
 
@@ -26,9 +28,6 @@ export default component$(() => {
 
   return (
 
-    
-    <div>
-
           <Resource
             value={getProductPage}
             onPending={() =>
@@ -36,7 +35,17 @@ export default component$(() => {
                 <div class="row">
                   <div class="col-12">
                     <div class="alert alert-warning" role="alert">
-                      Loading...
+                      <div class="text-center">
+                        <div class="spinner-grow spinner-grow-sm text-danger" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow spinner-grow-sm text-success" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow spinner-grow-sm text-warning" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -69,7 +78,7 @@ export default component$(() => {
               </div>
             )}
           />
-      </div>
+
 
   );
 
@@ -99,48 +108,6 @@ export const Products = component$((props: { data: any }) => {
   );
 });
 
-export function genePagi(totalCount:Number, pageLimit:Number, state:any) {
-  let mypages = [];
-  let total = totalCount/pageLimit;
-
-  for (let i=0; i<=total;i++){
-    
-    i == 0 ? (
-      mypages[i] = ""
-    ) : (
-      state.skip == (i-1) * pageLimit ? (
-        mypages[i] = <li class="page-item disabled"><a class="page-link" onClick$={()=> { state.skip = (i-1)*pageLimit } } href={`#`}><strong>{mypages.push(i) - 1}</strong></a></li>
-      ) : (
-        mypages[i] = <li class="page-item"><a class="page-link" onClick$={ () => {state.skip = (i-1)*pageLimit} } href={`#`}>{mypages.push(i) - 1}</a></li>
-      )
-    )
-  }
-  return mypages;
-}
-
-
-export const ProductPagination = component$((props: {totalProducts: Number, productLimit: Number, storeData: any}) => {
-  let limit = props.productLimit;
-  let total = props.totalProducts;
-
-  return (
-    <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-      <li class="page-item">
-        <a class="page-link" href={`#`} onClick$={() => { props.storeData.skip = 0 }}>First</a>
-      </li>
-          {
-            genePagi(total, limit, props.storeData)
-          }
-      <li class="page-item">
-        <a class="page-link" href={`#`} preventdefault:click onClick$={()=> { props.storeData.skip = total-limit } }>Last</a>
-      </li>
-    </ul>
-  </nav>
-  
-  );
-});
-
 export const ProductPreview = component$((props: { productDetails: Array }) => {
   const productDetails = props.productDetails;
 
@@ -152,9 +119,10 @@ export const ProductPreview = component$((props: { productDetails: Array }) => {
             <img src={productDetails.thumbnail} class="card-img-top" alt={productDetails.description}></img>
             <div class="card-body">
                 <h5 class="card-title placeholder-glow">
-                  <a href={`/pages/products/sku/${productDetails.id}`} tabindex="-1" class="">
-                    {productDetails.title} - <small>{productDetails.brand}</small>
-                  </a>
+                  <Link
+                  href={`/pages/products/sku/${productDetails.id}`} >
+                  {productDetails.title} - <small>{productDetails.brand}</small>
+                </Link>
                 </h5>
                 <p class="card-text placeholder-glow">
                   {productDetails.description}
@@ -163,14 +131,59 @@ export const ProductPreview = component$((props: { productDetails: Array }) => {
                 <p>Rating: {productDetails.rating}</p>
                 <p>Stock: {productDetails.stock}</p>
                 <p>Category: {productDetails.category}</p>
-                <a href={`/pages/products/sku/${productDetails.id}`} tabindex="-1" class="btn btn-primary col-6">Read More</a>
+                <Link
+                  href={`/pages/products/sku/${productDetails.id}`}
+                  class={`btn btn-primary col-6`} >
+                  Read More
+                </Link>
             </div>
           </div>
         </div>
     
       );
     });
+
+    export const ProductPagination = component$((props: {totalProducts: Number, productLimit: Number, storeData: any}) => {
+      let limit = props.productLimit;
+      let total = props.totalProducts;
     
+      return (
+        <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href={`#`} onClick$={() => { props.storeData.skip = 0 }}>First</a>
+          </li>
+              {
+                genePagi(total, limit, props.storeData)
+              }
+          <li class="page-item">
+            <a class="page-link" href={`#`} preventdefault:click onClick$={()=> { props.storeData.skip = total-limit } }>Last</a>
+          </li>
+        </ul>
+      </nav>
+      
+      );
+    });
+
+    export function genePagi(totalCount:Number, pageLimit:Number, state:any) {
+      let mypages = [];
+      let total = totalCount/pageLimit;
+    
+      for (let i=0; i<=total;i++){
+        
+        i == 0 ? (
+          mypages[i] = ""
+        ) : (
+          state.skip == (i-1) * pageLimit ? (
+            mypages[i] = <li class="page-item disabled"><a class="page-link" onClick$={()=> { state.skip = (i-1)*pageLimit } } href={`#`}><strong>{mypages.push(i) - 1}</strong></a></li>
+          ) : (
+            mypages[i] = <li class="page-item"><a class="page-link" onClick$={ () => {state.skip = (i-1)*pageLimit} } href={`#`}>{mypages.push(i) - 1}</a></li>
+          )
+        )
+      }
+      return mypages;
+    }
+
 export async function getProducts( limit: number, skip: number, controller?: AbortController ): Promise<string[]> {
   //https://dummyjson.com/products?limit=6&skip=96
   console.log('FETCH', `https://dummyjson.com/products?limit=${limit}&skip=${skip}`);
@@ -184,3 +197,7 @@ export async function getProducts( limit: number, skip: number, controller?: Abo
     ? json
     : Promise.reject(json);
 }
+
+export const head: DocumentHead = {
+  title: 'Products'
+};

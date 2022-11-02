@@ -1,8 +1,11 @@
-import { Resource, component$, useStore, useResource$, useWatch$ } from '@builder.io/qwik';
-import { useLocation } from "@builder.io/qwik-city";
+import { Resource, component$, useStore, useResource$, useContext, useContextProvider, createContext  } from '@builder.io/qwik';
+import { useLocation, DocumentHead } from "@builder.io/qwik-city";
 import {getCart} from '~/components/cart/cart'
-export default component$(() => {
+import { head } from '~/routes/pages/pricing';
 
+export const mytitle = "";
+export default component$(() => {
+   
   const { pathname, params } = useLocation();
   const store = useStore({
     productId: params.sku,
@@ -25,9 +28,6 @@ export default component$(() => {
 
   return (
 
-    
-    <div>
-
           <Resource
             value={productDetail}
             onPending={() =>
@@ -35,8 +35,18 @@ export default component$(() => {
                 <div class="row">
                   <div class="col-12">
                     <div class="alert alert-warning" role="alert">
-                      Loading...
-                    </div>
+                        <div class="text-center">
+                          <div class="spinner-grow spinner-grow-sm text-danger" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                          <div class="spinner-grow spinner-grow-sm text-success" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                          <div class="spinner-grow spinner-grow-sm text-warning" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                        </div>
+                      </div>
                   </div>
                 </div>
               </div>
@@ -59,10 +69,11 @@ export default component$(() => {
                 
                 <Products data={product} />
                 
+                
+
               </div>
             )}
           />
-      </div>
 
   );
 
@@ -70,55 +81,66 @@ export default component$(() => {
 
 export const Products = component$((props: { data: any }) => {
   const products = props.data;
-
   //console.log(products);
+  return (  
+    <ProductPreview productDetails={products} />
+  );
+});
+
+interface CarouselStore {
+  items: string[];
+  itemsAlt: string;
+}
+export const CarouselContext = createContext<CarouselStore>('Carousel');
+
+export const Carousel = component$(() => {
+  const todos = useContext(CarouselContext);
   return (
-      
-      <ProductPreview productDetails={products} />
-      
+   
+   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+     <div class="carousel-indicators">
+       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+     </div>
+     <div class="carousel-inner">
+       {todos.items.map((item) => (
+         <div class={`carousel-item ${todos.items.indexOf(item) == 0 ? "active" : "" }`}>
+           <img src={item} class="d-block w-100" alt={todos.itemsAlt}/>
+         </div>
+       ))}
+     </div>
+     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+       <span class="visually-hidden">Previous</span>
+     </button>
+     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+       <span class="carousel-control-next-icon" aria-hidden="true"></span>
+       <span class="visually-hidden">Next</span>
+     </button>
+   </div>
+   
   );
 });
 
 export const ProductPreview = component$((props: { productDetails: Array }) => {
   const product = props.productDetails;
+  useContextProvider(
+    CarouselContext,
+    useStore<CarouselStore>({
+      items: product.images,
+      itemsAlt: product.description
+    })
+  );
 
   return (
     
     <div class="container">
     <div class="row">
       <div class="col-6">
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src={product.images[0]} class="d-block w-100" alt={product.description}/>
-              </div>
-              <div class="carousel-item">
-                <img src={product.images[1]} class="d-block w-100" alt={product.description}/>
-              </div>
-              <div class="carousel-item">
-                <img src={product.images[2]} class="d-block w-100" alt={product.description}/>
-              </div>
-              <div class="carousel-item">
-                <img src={product.images[3]} class="d-block w-100" alt={product.description}/>
-              </div>
-              <div class="carousel-item">
-                <img src={product.images[4]} class="d-block w-100" alt={product.description}/>
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-        </div>
+
+        <Carousel />
+
       </div>
 
       <div class="col-6">
@@ -155,8 +177,15 @@ export async function getProductDetail( proId: string, controller?: AbortControl
   });
   console.log('FETCH resolved');
   const json = await resp.json();
-  //console.log(json);
+  console.log(json?.title);
+  //mytitle = json?.title;
+  //getHead(mytitle);
+  console.log(mytitle);
   return !Array.isArray(json)
     ? json
     : Promise.reject(json);
 }
+
+export const head: DocumentHead = {
+  title: "Products"
+};

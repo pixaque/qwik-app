@@ -11,19 +11,17 @@ export default component$(() => {
   useStyles$(styles);
 
   return (
-    <main>
       <div class="container">
-      <header class="d-flex flex-wrap justify-content-center mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none logo">
-            <QwikLogo />
-        </a>
+        <header class="d-flex flex-wrap justify-content-center mb-4 border-bottom">
+          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none logo">
+              <QwikLogo />
+          </a>
 
-        <Menu />
-        <Cart />
-        
-      </header>
+          <Menu />
+          <Cart />
+          
+        </header>
       </div>
-    </main>
 
   );
 });

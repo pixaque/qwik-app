@@ -7,3 +7,4 @@
 - [Pricing](/pages/pricing)
 - [Products](/pages/products)
 - [FAQs](/pages/faqs)
+- [About Us](/pages/about-us)
