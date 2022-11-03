@@ -34,39 +34,37 @@ export default component$(() => {
           <h5 class="offcanvas-title" id="offcanvasExampleLabel">Shopping Cart</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
+        
         <div class="offcanvas-body">
-          
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            
-            <button type="button" onClick$={()=> {cartProducts.length = 0; cartQty = [1]}} class="btn btn-primary btn-sm"><i class="bi bi-cart-fill"></i> Clear Cart</button>
-            
-          </div>
-                
-            {
-              <Display cartItems={store} />
-            }
 
-          <div class="cart-footer text-right">
-              <a href="page-checkout.html" class="btn btn-success my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
-          </div>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="button" onClick$={()=> {cartProducts.length = 0; cartQty.length = 0}} class="btn btn-primary btn-sm"><i class="bi bi-cart-fill"></i> Clear Cart</button>
+              </div>
+
+              <Display cartItems={store} />
+              
+              <div class="cart-footer text-right">
+                  <a href="page-checkout.html" class="btn btn-success my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
+              </div>
+            
           
         </div>
       </div>
   );
 });
-
-
+  
 export const Display = component$((props: {cartItems: any}) => {
   
   console.log(props.cartItems.data?.length);
-  
+
   return (
     <>
-    <div class="table-responsive">  
+    <div class="table-responsive">
+
       <table class="table table-borderless">
         <thead>
             <tr>
-                <th scope="col"># </th>
+                <th scope="col">#</th>
                 <th scope="col">Order Details</th>
                 <th scope="col" class="text-right">Total</th>
                 <th scope="col">Act.</th>
@@ -94,11 +92,11 @@ export const Display = component$((props: {cartItems: any}) => {
                       name={`cartQty-${a.id}`}
                       id={`cartQty-${a.id}`}
                       min="1" 
-                      value="1"
+                      value={cartQty[props.cartItems.data.indexOf(a)] == null | undefined ? 1 : cartQty[props.cartItems.data.indexOf(a)]}
                       onInput$={(ev) => 
                         {
                           props.cartItems.value = (ev.target as HTMLInputElement).value;
-                          cartQty[props.cartItems.data.indexOf(a)+1] = props.cartItems.value;
+                          cartQty[props.cartItems.data.indexOf(a)] = props.cartItems.value;
                         }
                       } />
                   </div>
@@ -106,13 +104,18 @@ export const Display = component$((props: {cartItems: any}) => {
               </div>
             </td>
           <td class="text-right">
-            $ {a.price * (cartQty[props.cartItems.data.indexOf(a)+1] == null | undefined ? 1 : cartQty[props.cartItems.data.indexOf(a)+1])}
+            $ {a.price * (cartQty[props.cartItems.data.indexOf(a)] == null | undefined ? 1 : cartQty[props.cartItems.data.indexOf(a)])}
           </td>
           <td>
+            
             <a 
               href="#" 
               class="text-danger" 
-              onClick$={ ()=> {cartProducts.splice(props.cartItems.data.indexOf(a), 1); cartQty.splice(props.cartItems.data.indexOf(a)+1, 1)}}>
+              onClick$={ ()=> {
+                  cartProducts.splice(props.cartItems.data.indexOf(a), 1); 
+                  cartQty.splice(props.cartItems.data.indexOf(a) == null | undefined ? 1 : props.cartItems.data.indexOf(a), 1);
+                }
+                }>
                 <i class="bi bi-x-circle-fill"></i>
             </a>
           </td>
@@ -161,7 +164,7 @@ export function productCollection(store: productsCollectin) {
 
 export function getTotal(item, qty){
   let array=[];
-  array.push(item?.map((a)=>(parseFloat(a.price)*(qty[item.indexOf(a)+1] == null | undefined ? 1 : qty[item.indexOf(a)+1]))))
+  array.push(item?.map((a)=>(a.price)*(qty[item.indexOf(a)] == null | undefined ? 1 : qty[item.indexOf(a)])))
   let ab = array[0]?.reduce(myFunc, 0 );
   //console.log(ab);
   return ab;

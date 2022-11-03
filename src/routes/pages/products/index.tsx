@@ -1,8 +1,10 @@
-import { Resource, component$, useStore, useResource$} from '@builder.io/qwik';
+import { Resource, component$, useStore, useResource$, useStyles$} from '@builder.io/qwik';
 import type { DocumentHead, DocumentMeta } from '@builder.io/qwik-city';
 import { Link } from '@builder.io/qwik-city';
+import styles from '../../pages/products/sku/[sku]/cart.css?inline'
 
 export default component$(() => {
+  useStyles$(styles);
 
   interface State {
     data: any;
@@ -10,7 +12,7 @@ export default component$(() => {
     skip: number;
   }
 
-  const store = useStore<State>({ data: null, limit: 6, skip: 0 });
+  const store = useStore<State>({ data: null, limit: 12, skip: 0 });
 
   const getProductPage = useResource$<any>(async ({ track, cleanup }) => {
 
@@ -113,24 +115,43 @@ export const ProductPreview = component$((props: { productDetails: Array }) => {
 
   return (
     
-        <div class="col-4">
+        <div class="col-3">
           
           <div class="card mb-4" aria-hidden="true">
             <img src={productDetails.thumbnail} class="card-img-top" alt={productDetails.description}></img>
             <div class="card-body">
-                <h5 class="card-title placeholder-glow">
+                <h6 class="card-title placeholder-glow">
                   <Link
                   href={`/pages/products/sku/${productDetails.id}`} >
-                  {productDetails.title} - <small>{productDetails.brand}</small>
+                  <strong>{productDetails.title} - <small>{productDetails.brand}</small></strong>
                 </Link>
-                </h5>
-                <p class="card-text placeholder-glow">
-                  {productDetails.description}
-                </p>
+                </h6>
+                {
+                  /*
+                  <p class="card-text placeholder-glow">
+                    {productDetails.description}
+                  </p>
+                  */
+                }
+                
                 <h6>$ <span class="text-danger">{productDetails.price}</span> - Discount: <span class="text-success">{productDetails.discountPercentage}</span></h6>
-                <p>Rating: {productDetails.rating}</p>
+                <p>Rating:
+                  <input
+                    class="rating d-inline-block"
+                    max="5"
+                    step="0.5"
+                    style={`--value:${productDetails.rating}`}
+                    type="range"
+                    value={productDetails.rating} />
+                </p>
                 <p>Stock: {productDetails.stock}</p>
-                <p>Category: {productDetails.category}</p>
+                {
+                  /*
+                  <p>Category: {productDetails.category}</p>
+                  */
+                }
+                
+
                 <Link
                   href={`/pages/products/sku/${productDetails.id}`}
                   class={`btn btn-primary col-6`} >
