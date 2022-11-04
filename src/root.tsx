@@ -3,6 +3,7 @@ import { QwikCity, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-
 import { RouterHead } from './components/router-head/router-head';
 import './global.css';
 
+
 export default component$(() => {
   /*
    * The root of a QwikCity site always start with the <QwikCity> component,
@@ -19,7 +20,6 @@ export default component$(() => {
       <body lang="en">
         <RouterOutlet />
         <ServiceWorkerRegister />
-        <script src="http://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
       </body>
     </QwikCity>
   );

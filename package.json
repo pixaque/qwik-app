@@ -30,11 +30,14 @@
     "eslint-plugin-qwik": "0.10.0",
     "node-fetch": "3.2.10",
     "prettier": "2.7.1",
+    "sass": "^1.54.8",
     "typescript": "4.8.3",
     "vite": "3.1.1",
     "vite-tsconfig-paths": "3.5.0"
   },
   "dependencies": {
-    "bootstrap-icons": "^1.9.1"
+    "bootstrap": "^5.2.2",
+    "bootstrap-icons": "^1.9.1",
+    "simple-mask-money": "^3.0.1"
   }
 }

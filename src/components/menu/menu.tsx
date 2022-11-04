@@ -1,7 +1,7 @@
 import { component$, useClientEffect$, useStore, useWatch$ } from '@builder.io/qwik';
 import { useContent, Link, useLocation } from '@builder.io/qwik-city';
 import {getCartItems} from '~/components/cart/cart';
-import {cartProducts, cartCount} from '~/components/var/global'
+import {constants} from '~/components/var/global'
 
 export default component$(() => {
 
@@ -16,13 +16,13 @@ export default component$(() => {
     track(() => store.count);
 
     const update = () => {
-      store.count = getCartItems(cartProducts);
+      store.count = getCartItems(constants.cartProducts);
     };
     update();
 */
     
     const update = () => {
-      store.count = getCartItems(cartProducts);
+      store.count = getCartItems(constants.cartProducts);
     };
     update();
     const tmrId = setInterval(update, 500);

@@ -146,9 +146,16 @@ export default component$(() => {
 
 export const head: DocumentHead = {
   title: 'Welcome to Qwik Docs Starter',
-  //description: "I am a description, and I can create multiple tags",
-  meta: {
-    name: "keywords",
-    content: "react,meta,document,html,tags"
-  }
+  meta: [
+    {
+      name: "description",
+      content:
+        "Web developer that likes to tackle challenges, learn from them, write about them, and have fun while in the process!",
+    },
+    {
+      name: "keywords",
+      content:
+        "QWIK framework,No hydration, auto lazy-loading, edge-optimized, and fun, Zero loading, Resumbale, Lazy Loading, Reduced Rendering, Scalability, Code Once, ",
+    },
+  ],
 };

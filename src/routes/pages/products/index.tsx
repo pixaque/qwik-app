@@ -2,8 +2,22 @@ import { Resource, component$, useStore, useResource$, useStyles$} from '@builde
 import type { DocumentHead, DocumentMeta } from '@builder.io/qwik-city';
 import { Link } from '@builder.io/qwik-city';
 import styles from '../../pages/products/sku/[sku]/cart.css?inline'
+import {constants} from '~/components/var/global'
+import SimpleMaskMoney from 'simple-mask-money'
 
 export default component$(() => {
+// Default configuration
+SimpleMaskMoney.args = {
+  allowNegative: false,
+  negativeSignAfter: false,
+  prefix: constants.currency,
+  suffix: '',
+  fixed: true,
+  fractionDigits: 2,
+  decimalSeparator: '.',
+  thousandsSeparator: ','
+};
+
   useStyles$(styles);
 
   interface State {
@@ -12,7 +26,7 @@ export default component$(() => {
     skip: number;
   }
 
-  const store = useStore<State>({ data: null, limit: 12, skip: 0 });
+  const store = useStore<State>({ data: null, limit: constants.perPage === undefined | null ? 6 : constants.perPage, skip: 0 });
 
   const getProductPage = useResource$<any>(async ({ track, cleanup }) => {
 
@@ -115,7 +129,7 @@ export const ProductPreview = component$((props: { productDetails: Array }) => {
 
   return (
     
-        <div class="col-3">
+        <div class="col-lg-3 col-md-4 col-sm-6">
           
           <div class="card mb-4" aria-hidden="true">
             <img src={productDetails.thumbnail} class="card-img-top" alt={productDetails.description}></img>
@@ -134,7 +148,7 @@ export const ProductPreview = component$((props: { productDetails: Array }) => {
                   */
                 }
                 
-                <h6>$ <span class="text-danger">{productDetails.price}</span> - Discount: <span class="text-success">{productDetails.discountPercentage}</span></h6>
+                <h6><span class="text-danger">{SimpleMaskMoney.formatToCurrency(productDetails.price)}</span> - Discount: <span class="text-success">{productDetails.discountPercentage}</span></h6>
                 <p>Rating:
                   <input
                     class="rating d-inline-block"
@@ -220,5 +234,17 @@ export async function getProducts( limit: number, skip: number, controller?: Abo
 }
 
 export const head: DocumentHead = {
-  title: 'Products'
+  title: 'Products',
+  meta: [
+    {
+      name: "description",
+      content:
+        "Web developer that likes to tackle challenges, learn from them, write about them, and have fun while in the process!",
+    },
+    {
+      name: "keywords",
+      content:
+        "QWIK framework,No hydration, auto lazy-loading, edge-optimized, and fun, Zero loading, Resumbale, Lazy Loading, Reduced Rendering, Scalability, Code Once, ",
+    },
+  ],
 };

@@ -1,11 +1,25 @@
 import { Resource, component$, useStyles$, useStore, useResource$, useContext, useContextProvider, createContext  } from '@builder.io/qwik';
 import { useLocation, DocumentHead } from "@builder.io/qwik-city";
+import {constants} from '~/components/var/global'
 import {getCart} from '~/components/cart/cart'
 import { head } from '~/routes/pages/pricing';
 import styles from './cart.css?inline';
+import SimpleMaskMoney from 'simple-mask-money'
 
 export const mytitle = "";
 export default component$(() => {
+// Default configuration
+SimpleMaskMoney.args = {
+  allowNegative: false,
+  negativeSignAfter: false,
+  prefix: constants.currency, //"$ ",
+  suffix: '',
+  fixed: true,
+  fractionDigits: 2,
+  decimalSeparator: '.',
+  thousandsSeparator: ','
+};
+
   useStyles$(styles);
 
   const { pathname, params } = useLocation();
@@ -156,20 +170,20 @@ export const ProductPreview = component$((props: { productDetails: Array }) => {
     
     <div class="container">
     <div class="row">
-      <div class="col-6">
+      <div class="col-lg-6 col-md-6 col-sm-12">
 
         <Carousel />
 
       </div>
 
-      <div class="col-6">
+      <div class="col-lg-6 col-md-6 col-sm-12">
         <h5 class="card-title placeholder-glow">
             {product.title} - <small>{product.brand}</small>
           </h5>
           <p class="card-text placeholder-glow">
             {product.description}
           </p>
-          <h6>$ <span class="text-danger">{product.price}</span> - Dis %: <span class="text-success">{product.discountPercentage}</span></h6>
+          <h6><span class="text-danger">{SimpleMaskMoney.formatToCurrency(product.price)}</span> - Dis %: <span class="text-success">{product.discountPercentage}</span></h6>
           <p>Rating:
             <input
               class="rating d-inline-block"

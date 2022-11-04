@@ -36,4 +36,16 @@ export default component$(() => {
 
 export const head: DocumentHead = {
   title: 'About Us',
+  meta: [
+    {
+      name: "description",
+      content:
+        "Web developer that likes to tackle challenges, learn from them, write about them, and have fun while in the process!",
+    },
+    {
+      name: "keywords",
+      content:
+        "QWIK framework,No hydration, auto lazy-loading, edge-optimized, and fun, Zero loading, Resumbale, Lazy Loading, Reduced Rendering, Scalability, Code Once, ",
+    },
+  ],
 };
