@@ -9,7 +9,17 @@
 // `$body-color` or write more CSS that override's Bootstrap's CSS like so:
 // `body { color: red; }`.
 
+// Toggle global options
+$enable-gradients: true;
+$enable-shadows: true;
 
+$offcanvas-box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
+
+// Customize some defaults
+$body-color: #000;
+$body-bg: #fff;
+$border-radius: .4rem;
+$success: #0c9c54;
 //
 // Bring in Bootstrap
 //
@@ -18,30 +28,17 @@
 //
 // Import all of Bootstrap's CSS
 
-// @import "/node_modules/bootstrap/scss/bootstrap";
+@import "/node_modules/bootstrap/scss/bootstrap";
+@import "/node_modules/bootstrap-icons/font/bootstrap-icons.scss";
 
 // Option 2
 //
 // Place variable overrides first, then import just the styles you need. Note that some stylesheets are required no matter what.
 
-@import "/node_modules/bootstrap/scss/bootstrap.scss";
-@import "/node_modules/bootstrap-icons/font/bootstrap-icons.scss";
-
-// Toggle global options
-$enable-gradients: true;
-$enable-shadows: true;
-
-$offcanvas-box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
-
-// Customize some defaults
-$body-color: rgb(29, 29, 29);
-$body-bg: #fff;
-$border-radius: .4rem;
-$success: #0c9c54;
 
 // Required
 @import "/node_modules/bootstrap/scss/functions";
-//@import "/node_modules/bootstrap/scss/variables";
+@import "/node_modules/bootstrap/scss/variables";
 @import "/node_modules/bootstrap/scss/maps";
 @import "/node_modules/bootstrap/scss/mixins";
 @import "/node_modules/bootstrap/scss/utilities";
@@ -92,5 +89,57 @@ $success: #0c9c54;
 @import "icon-list";
 
 body {
-  padding: 1.5rem;
+  padding: 0;
+  margin: 0;
+}
+.navbar {
+  width: 100%;
+}
+header{
+  padding: 0px !important;
+  height: 70px;
+}
+.navbar-collapse{
+  flex-grow: 0 !important;
+}
+
+@media (max-width: 767.98px) {  
+  .nav.navbar-nav {
+    position: fixed;
+    text-align: left;
+    background: #EEE !important;
+    width: 100%;
+    right: 5px;
+    padding: 0px 0px;
+  }
+
+  ul.nav.navbar-nav li a.nav-link {
+    padding: 9px 10px !important;
+    border-bottom: 1px solid #AAA;
+    border-top: 1px solid #FFF;
+    font-weight: bold;
+    font-size: 13px;
+  }
+
+  .navbar-toggler {
+    padding: 4px;
+    font-size: var(--bs-navbar-toggler-font-size);
+    line-height: 1;
+    color: var(--bs-navbar-color);
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    transition: var(--bs-navbar-toggler-transition);
+    right: 75px;
+    position: fixed;
+  }
+
+  .nav-item.d-sm-none.d-xs-none.d-md-none.d-inline-block {
+    position: absolute;
+    right: 10px;
+    width: 62px;
+    height: 40px;
+  }
+  
+
 }

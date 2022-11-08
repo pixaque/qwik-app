@@ -1,18 +1,20 @@
-import { component$, useClientEffect$, useOnDocument, useStore } from '@builder.io/qwik';
+import { component$, useRef, useClientEffect$, useOnDocument, useWatch$, useStore } from '@builder.io/qwik';
 import {constants} from '~/components/var/global'
 import SimpleMaskMoney from 'simple-mask-money'
 //export const cartProducts = [];
-//export var cartCount;
+export const gCart = 0;
 
 export const cartQty = [1];
 
 interface productsCollectin {
   data: Array;
-  value: Number;
+  count: number;
+  debounced: number;
 }
 
 export default component$(() => {
 
+  const outputRef = useRef();
   // Default configuration
   SimpleMaskMoney.args = {
     allowNegative: false,
@@ -27,19 +29,44 @@ export default component$(() => {
   
   const store = useStore({
     data: null,
-    value: 1
+    count: 0,
+    debounced: 0
   });
 
-  useClientEffect$(( {track} ) => {
-    // track(() => store.data);
-    track(() => store.data);
-
-    store.data = productCollection(constants.cartProducts);
-    //const tmrId = setInterval(() => store.data = productCollection(constants.cartProducts), 1000);
+  
+  useClientEffect$(( {cleanup} ) => {
+  //useWatch$(( {track, cleanup} ) => {    
+    //track(() => constants.cartProducts);
+    //track(() => store.data);
+    //console.log("test");
+    const update = () => {
+      //console.log(constants.cartProducts);
+      //store.data = productCollection(constants.cartProducts == [] ? [] : constants.cartProducts);
+      store.data = addtoCart(constants.cartProducts == [] ? [] : constants.cartProducts);
+    };
+    //update();
+    const tmrId = setInterval(update, 500);
+    cleanup(() => clearInterval(tmrId));
     //return () => clearInterval(tmrId);
+  }, []);
+  /*
+  useWatch$(({ track }) => {
+    // track changes in store.count
+    track(() => store.count);
+    console.log('count changed');
 
+    const timer = setTimeout(() => {
+      store.debounced = store.count;
+      store.data = addtoCart(constants.cartProducts == [] ? [] : constants.cartProducts);
+    }, 500);
+    return () => {
+      console.log(store.data);
+      clearTimeout(timer);
+    };
   });
-    
+*/
+  console.log('<App> renders');
+  
   return (
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
@@ -49,10 +76,19 @@ export default component$(() => {
         
         <div class="offcanvas-body">
 
+        {/*
+        
+        <div>
+          <Child state={store} />
+          <button id="add" onClick$={() => store.count++}>
+            +
+          </button>
+        </div>
+        
+        */}
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="button" onClick$={()=> {constants.cartProducts.length = 0; cartQty.length = 0}} class="btn btn-primary btn-sm"><i class="bi bi-cart-fill"></i> Clear Cart</button>
+                <button type="button" onClick$={()=> {constants.cartProducts.length = 0; cartQty.length = 0;}} class="btn btn-primary btn-sm"><i class="bi bi-cart-fill"></i> Clear Cart</button>
               </div>
-
               <Display cartItems={store} />
               
               <div class="cart-footer text-right">
@@ -65,9 +101,25 @@ export default component$(() => {
   );
 });
   
+export const Child = component$((props: { state: State }) => {
+  console.log('<Child> render');
+  return (
+    <div>
+      <div id="child">{props.state.count}</div>
+      <GrandChild state={props.state} />
+    </div>
+  );
+});
+
+export const GrandChild = component$((props: { state: State }) => {
+  console.log('<GrandChild> render');
+  return <div id="debounced">Debounced: {props.state.debounced}</div>;
+});
+
 export const Display = component$((props: {cartItems: any}) => {
   
-  console.log(props.cartItems.data?.length);
+  //constants.cartCount = props.cartItems.data?.length;
+  //console.log(props.cartItems.data?.length);
 
   return (
     <>
@@ -79,7 +131,7 @@ export const Display = component$((props: {cartItems: any}) => {
                 <th scope="col">#</th>
                 <th scope="col">Order Details</th>
                 <th scope="col" class="text-right">Total</th>
-                <th scope="col">Act.</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -88,18 +140,15 @@ export const Display = component$((props: {cartItems: any}) => {
           <th scope="row">{props.cartItems.data.indexOf(a)+1}</th>
           <td>
               <div class="row">
-                {/*
-                <div class="col-sm-4">
-                <img src={a.thumbnail} class="img-fluid" width="120" alt={a.description} />
+                <div class="col-sm-2">
+                  <img src={a.thumbnail} class="icon-xl shadow-lg border border-2 border-green rounded-circle" width="30" height="30" alt={a.description} />
                 </div>
-                */}
-                <div class="col-sm-12">
+                <div class="col-sm-10">
                   <div class="form-group mb-0">
-                    <a href={`/pages/products/sku/${a.id}`} tabindex="-1" class="">
-                    <strong>{a.title}</strong>
-                    </a>
-                    <br/>
-                    <strong>{SimpleMaskMoney.formatToCurrency(a.price)} * </strong>
+                    <a href={`/pages/products/sku/${a.id}`} tabindex="-1" class="d-inline-block">
+                    <strong><small class="d-inline-block ">{a.title}</small></strong>
+                    </a><br/>
+                    <strong class="d-inline-block ">{SimpleMaskMoney.formatToCurrency(a.price)} * </strong>
                     <input 
                       type="number" 
                       class="form-control form-control-sm" 
@@ -126,7 +175,7 @@ export const Display = component$((props: {cartItems: any}) => {
               href="#" 
               class="text-danger" 
               onClick$={ ()=> {
-                constants.cartProducts.splice(props.cartItems.data.indexOf(a), 1); 
+                  constants.cartProducts.splice(props.cartItems.data.indexOf(a), 1); 
                   cartQty.splice(props.cartItems.data.indexOf(a) == null | undefined ? 1 : props.cartItems.data.indexOf(a), 1);
                 }
                 }>
@@ -172,8 +221,16 @@ export const Display = component$((props: {cartItems: any}) => {
 
 
 export function productCollection(store: productsCollectin) {
+  //store.count++;
+  //store.data = constants.cartProducts == [] ? [] : constants.cartProducts;
+  //console.log(store);
+  //console.log(store.map((a)=> (a)));
+  //return store.map((a)=> (a));
+  /*
   store.data = constants.cartProducts;
+  console.log(store.data.map((a)=> (a)));
   return store.data.map((a)=> (a));
+  */
 }
 
 export function getTotal(item, qty){
@@ -202,8 +259,10 @@ export function cartItems(items){
   if( !constants.cartProducts.find(c => checkCartItem(c) == checkCartItem(items) ) ){
     constants.cartProducts.push(items);
       //console.log(constants.cartProducts);
-      constants.cartCount === undefined | null ? constants.cartCount = 0 : constants.cartCount = getCartItems(constants.cartProducts);
-    console.log(constants.cartCount);
+      constants.cartCount = undefined | null ? 0 : getCartItems(constants.cartProducts);
+      //productCollection(store.count);
+      //constants.cartCount = getCartItems(constants.cartProducts);
+    //console.log(constants.cartCount);
 
   } else {
     alert("Please update the quantity. Product already added.");
@@ -223,3 +282,6 @@ export function getCartItems(productLine){
   return productLine.length;
 }
 
+export function addtoCart(myProducts) {
+  return myProducts.map((a)=> (a));
+}

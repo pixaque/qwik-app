@@ -7,7 +7,7 @@ export var perPage = 12;
 
 export const constants = {};
 
-constants.cartProducts = [];
+constants.cartProducts = new Array;
 constants.cartCount = 0;
 constants.currency = "$ ";//"₨ ";
 constants.perPage = 12;

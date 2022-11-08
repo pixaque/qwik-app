@@ -1,10 +1,12 @@
 import { Resource, component$, useStyles$, useStore, useResource$, useContext, useContextProvider, createContext  } from '@builder.io/qwik';
 import { useLocation, DocumentHead } from "@builder.io/qwik-city";
 import {constants} from '~/components/var/global'
-import {getCart} from '~/components/cart/cart'
+import {getCart, cartQty} from '~/components/cart/cart'
 import { head } from '~/routes/pages/pricing';
 import styles from './cart.css?inline';
 import SimpleMaskMoney from 'simple-mask-money'
+import { Display, cartQty } from '~/components/cart/cart';
+//import { cartQty } from '~/components/cart/backup-tsx';
 
 export const mytitle = "";
 export default component$(() => {
@@ -198,7 +200,7 @@ export const ProductPreview = component$((props: { productDetails: Array }) => {
           <a 
             tabindex="-1" 
             class="btn btn-primary col-6" 
-            onClick$={()=> { getCart({product}) } }
+            onClick$={()=> { getCart({product}); } }
             >
             Add To Cart
           </a>
@@ -218,7 +220,7 @@ export async function getProductDetail( proId: string, controller?: AbortControl
   });
   console.log('FETCH resolved');
   const json = await resp.json();
-  console.log(json?.title);
+  //console.log(json?.title);
   //mytitle = json?.title;
   //getHead(mytitle);
   console.log(mytitle);
