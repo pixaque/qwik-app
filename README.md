@@ -1,13 +1,8 @@
-# Qwik App ⚡️
+# Qwik and Bootstrap Shopping Cart App ⚡️
 
-- [Qwik Docs](https://qwik.builder.io/)
-- [Discord](https://qwik.builder.io/chat)
-- [Qwik GitHub](https://github.com/BuilderIO/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
-- [Partytown](https://partytown.builder.io/)
-- [Mitosis](https://github.com/BuilderIO/mitosis)
-- [Builder.io](https://www.builder.io/)
+A shopping cart is an essential part of a retailer's online store that streamlines the online shopping experience. It's software that allows website visitors to select, reserve, and purchase a product or service from an eCommerce interface.
+
+This is unique and with some few edits ready to go live. Just update the endpoint and add the payment integration and you are ready to go. Experience the really fast and quick shopping cart experience.
 
 ---
 
