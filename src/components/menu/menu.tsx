@@ -2,6 +2,7 @@ import { component$, useClientEffect$, useStore, useStyles$, useWatch$ } from '@
 import { useContent, Link, useLocation } from '@builder.io/qwik-city';
 import {getCartItems} from '~/components/cart/cart';
 import {constants} from '~/components/var/global';
+import Menu1 from '../menu/menu1'
 import { QwikLogo } from '../icons/qwik';
 import styles from './menu.css?inline';
 
@@ -45,10 +46,9 @@ export default component$(() => {
       <div class="container-fluid">
           <Link
             href={"/"}
-            class={
-              `navbar-brand`}
+            class={`navbar-brand`}
             >
-            <QwikLogo />
+              <QwikLogo />
           </Link>
           <button class="navbar-toggler p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="bi bi-list"></span>
@@ -60,18 +60,15 @@ export default component$(() => {
                       
                       <>
                           {item.items?.map((item) => (
-                            <li class={`nav-item-${item.text}`}>
+                            <li class={`nav-item-${item.text} dropdown`}>
                               <Link
                                 href={item.href}
-                                class={
-                                  `nav-link${loc.pathname === item.href ? ' active' : ''}`
-                                }
-                                aria-current={{
-                                  'page': loc.pathname === item.href,
-                                }}
-                              >
+                                class={ `nav-link${loc.pathname === item.href ? ' active' : ''} ${item.text === "About Us" ? "dropdown-toggle" : ""}`}
+                                aria-current={{ 'page': loc.pathname === item.href }}
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 {item.text}
                               </Link>
+                              {item.text == "About Us" ? <Menu1 /> : "" }                              
                             </li>
                           ))}
                           <li class="nav-item  d-none d-lg-block">

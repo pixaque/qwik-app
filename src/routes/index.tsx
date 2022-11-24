@@ -5,22 +5,70 @@ export default component$(() => {
   return (
     <>
       
-      <div class="container col-xxl-8 px-4 py-5">
-        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-          <div class="col-10 col-sm-8 col-lg-6">
-            <img src="https://images.unsplash.com/photo-1546177461-3283e4aa3b0c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80" class="img-fluid border rounded-3 shadow-lg" alt="Bootstrap Themes" loading="lazy" />
-          </div>
-          <div class="col-lg-6">
-            <h1 class="display-5 fw-bold lh-1 mb-3">Responsive left-aligned hero with image</h1>
-            <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-              <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
-              <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+      <div class="container-fluid" id='mainHeader'>
+        <div class="test">
+      
+          <div class="container col-xxl-8 px-4 py-5 text-white">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+              <div class="col-10 col-sm-8 col-lg-6">
+                <img src="https://images.unsplash.com/photo-1546177461-3283e4aa3b0c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80" class="img-fluid border rounded-3 shadow-lg" alt="Bootstrap Themes" loading="lazy" />
+              </div>
+              <div class="col-lg-6">
+                <h1 class="display-5 fw-bold lh-1 mb-3">Responsive left-aligned hero with image</h1>
+                <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                  <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
+                  <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      
+      <div class="container px-4 py-5">
 
+        <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+          <div class="d-flex flex-column align-items-start gap-2">
+            <h3 class="fw-bold">Left-aligned title explaining these awesome features</h3>
+            <p class="text-muted">Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+            <a href="#" class="btn btn-primary btn-lg">Primary button</a>
+          </div>
+          <div class="row row-cols-1 row-cols-sm-2 g-4">
+            <div class="d-flex flex-column gap-2">
+              <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                <i class="bi bi-collection"></i>
+              </div>
+              <h4 class="fw-semibold mb-0">Featured title</h4>
+              <p class="text-muted">Paragraph of text beneath the heading to explain the heading.</p>
+            </div>
+
+            <div class="d-flex flex-column gap-2">
+              <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                <i class="bi bi-gear-fill"></i>
+              </div>
+              <h4 class="fw-semibold mb-0">Featured title</h4>
+              <p class="text-muted">Paragraph of text beneath the heading to explain the heading.</p>
+            </div>
+
+            <div class="d-flex flex-column gap-2">
+              <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                <i class="bi bi-speedometer"></i>
+              </div>
+              <h4 class="fw-semibold mb-0">Featured title</h4>
+              <p class="text-muted">Paragraph of text beneath the heading to explain the heading.</p>
+            </div>
+
+            <div class="d-flex flex-column gap-2">
+              <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                <i class="bi bi-table"></i>
+              </div>
+              <h4 class="fw-semibold mb-0">Featured title</h4>
+              <p class="text-muted">Paragraph of text beneath the heading to explain the heading.</p>
+            </div>
+          </div>
+        </div>
+      </div>
       
       <div class="container-fluid px-4 py-5" id="custom-cards"  style="background-image: url('https://images.unsplash.com/photo-1569531115477-5e9a74a6a8ca?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');">
 
@@ -92,53 +140,6 @@ export default component$(() => {
         
         </div>
       </div>
-      
-
-      <div class="container px-4 py-5">
-
-        <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
-          <div class="d-flex flex-column align-items-start gap-2">
-            <h3 class="fw-bold">Left-aligned title explaining these awesome features</h3>
-            <p class="text-muted">Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-            <a href="#" class="btn btn-primary btn-lg">Primary button</a>
-          </div>
-          <div class="row row-cols-1 row-cols-sm-2 g-4">
-            <div class="d-flex flex-column gap-2">
-              <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
-                <i class="bi bi-collection"></i>
-              </div>
-              <h4 class="fw-semibold mb-0">Featured title</h4>
-              <p class="text-muted">Paragraph of text beneath the heading to explain the heading.</p>
-            </div>
-
-            <div class="d-flex flex-column gap-2">
-              <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
-                <i class="bi bi-gear-fill"></i>
-              </div>
-              <h4 class="fw-semibold mb-0">Featured title</h4>
-              <p class="text-muted">Paragraph of text beneath the heading to explain the heading.</p>
-            </div>
-
-            <div class="d-flex flex-column gap-2">
-              <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
-                <i class="bi bi-speedometer"></i>
-              </div>
-              <h4 class="fw-semibold mb-0">Featured title</h4>
-              <p class="text-muted">Paragraph of text beneath the heading to explain the heading.</p>
-            </div>
-
-            <div class="d-flex flex-column gap-2">
-              <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
-                <i class="bi bi-table"></i>
-              </div>
-              <h4 class="fw-semibold mb-0">Featured title</h4>
-              <p class="text-muted">Paragraph of text beneath the heading to explain the heading.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      
       
     </>
   );

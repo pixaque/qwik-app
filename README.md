@@ -1,13 +1,8 @@
-# Qwik App ⚡️
+# Qwik and Bootstrap Shopping Cart App ⚡️
 
-- [Qwik Docs](https://qwik.builder.io/)
-- [Discord](https://qwik.builder.io/chat)
-- [Qwik GitHub](https://github.com/BuilderIO/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
-- [Partytown](https://partytown.builder.io/)
-- [Mitosis](https://github.com/BuilderIO/mitosis)
-- [Builder.io](https://www.builder.io/)
+A shopping cart is an essential part of a retailer's online store that streamlines the online shopping experience. It's software that allows website visitors to select, reserve, and purchase a product or service from an eCommerce interface.
+
+This is unique and with some few edits ready to go live. Just update the endpoint and add the payment integration and you are ready to go. Experience the really fast and quick shopping cart experience.
 
 ---
 
@@ -25,36 +20,31 @@ Inside your project, you'll see the following directory structure:
         └── ...
 ```
 
-- `src/routes`: Provides the directory based routing, which can include a hierarchy of `layout.tsx` layout files, and an `index.tsx` file as the page. Additionally, `index.ts` files are endpoints. Please see the [routing docs](https://qwik.builder.io/qwikcity/routing/overview/) for more info.
+## Special Thanks
 
-- `src/components`: Recommended directory for components.
+[For Providing dummy data] https://dummyjson.com/
+[For providing dummy data] https://github.com/Ovi/DummyJSON
+[Qwik team for helping regarding some minor issues.] http://qwik.builder.io/
+[For providing some beautiful images.] https://unsplash.com/
+[Bootstrap 5.2] https://getbootstrap.com/docs/5.2/getting-started/introduction/
 
-- `public`: Any static assets, like images, can be placed in the public directory. Please see the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) for more info.
 
-## Add Integrations
-
-Use the `npm run qwik add` command to add additional integrations. Some examples of integrations include: Cloudflare, Netlify or Vercel server, and the [Static Site Generator (SSG)](https://qwik.builder.io/qwikcity/static-site-generation/static-site-config/).
+## Installation and getting started.
 
 ```shell
-npm run qwik add # or `yarn qwik add`
+git clone https://github.com/pixaque/qwik-cart.git # or `yarn preview`
 ```
 
-## Development
-
-Development mode uses [Vite's development server](https://vitejs.dev/). During development, the `dev` command will server-side render (SSR) the output.
+then 
 
 ```shell
-npm run dev # or `yarn dev`
+npm install # or `yarn preview`
 ```
 
-> Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
-
-## Preview
-
-The preview command will create a production build of the client modules, a production build of `src/entry.preview.tsx`, and run a local server. The preview server is only for convenience to locally preview a production build, and it should not be used as a production server.
+then
 
 ```shell
-npm run preview # or `yarn preview`
+npm start # or `yarn preview`
 ```
 
 ## Production

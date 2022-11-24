@@ -16,6 +16,5 @@ export default component$(() => {
           <Cart />
         </header>
       </div>
-
   );
 });

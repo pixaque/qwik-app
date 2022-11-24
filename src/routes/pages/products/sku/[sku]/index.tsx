@@ -8,7 +8,12 @@ import SimpleMaskMoney from 'simple-mask-money'
 import { Display, cartQty } from '~/components/cart/cart';
 //import { cartQty } from '~/components/cart/backup-tsx';
 
+type EndpointData = ProductData | null;
+export const onGet: RequestHandler<EndpointData> = async ({params = useLocation()}) => { console.log(params.sku); return getProductDetail(params.sku); };
+
+
 export const mytitle = "";
+
 export default component$(() => {
 // Default configuration
 SimpleMaskMoney.args = {
@@ -40,7 +45,7 @@ SimpleMaskMoney.args = {
 
     //return data;
   });
-
+  
   //  console.log("test");
   console.log(productDetail);
 
@@ -229,6 +234,20 @@ export async function getProductDetail( proId: string, controller?: AbortControl
     : Promise.reject(json);
 }
 
-export const head: DocumentHead = {
-  title: "Products"
+export const head: DocumentHead<EndpointData> = ({ data }) => {
+  return {
+    title: `Product - ${data.title}`,
+    meta: [
+      {
+        name: "description",
+        content:
+        `${data.title} ${data.description}`
+      },
+      {
+        name: "keywords",
+        content:
+        `${data.title}`
+      },
+    ],
+  };
 };

@@ -3,6 +3,7 @@ import type { DocumentHead, DocumentMeta } from '@builder.io/qwik-city';
 import { Link } from '@builder.io/qwik-city';
 import styles from '../../pages/products/sku/[sku]/cart.css?inline'
 import {constants} from '~/components/var/global'
+import {db, getFireStoreProducts} from '~/components/database/db'
 import SimpleMaskMoney from 'simple-mask-money'
 
 export default component$(() => {
@@ -232,6 +233,7 @@ export async function getProducts( limit: number, skip: number, controller?: Abo
     ? json
     : Promise.reject(json);
 }
+
 
 export const head: DocumentHead = {
   title: 'Products',

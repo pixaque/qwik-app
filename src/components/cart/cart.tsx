@@ -12,6 +12,10 @@ interface productsCollectin {
   debounced: number;
 }
 
+export const onGet = async () => {
+  return constants.cartCount;
+};
+
 export default component$(() => {
 
   const outputRef = useRef();
@@ -34,9 +38,9 @@ export default component$(() => {
   });
 
   
-  useClientEffect$(( {cleanup} ) => {
+  useClientEffect$(( {cleanup, track} ) => {
   //useWatch$(( {track, cleanup} ) => {    
-    //track(() => constants.cartProducts);
+    track(() => constants.cartCount);
     //track(() => store.data);
     //console.log("test");
     const update = () => {
@@ -49,22 +53,8 @@ export default component$(() => {
     cleanup(() => clearInterval(tmrId));
     //return () => clearInterval(tmrId);
   }, []);
-  /*
-  useWatch$(({ track }) => {
-    // track changes in store.count
-    track(() => store.count);
-    console.log('count changed');
-
-    const timer = setTimeout(() => {
-      store.debounced = store.count;
-      store.data = addtoCart(constants.cartProducts == [] ? [] : constants.cartProducts);
-    }, 500);
-    return () => {
-      console.log(store.data);
-      clearTimeout(timer);
-    };
-  });
-*/
+  
+  
   console.log('<App> renders');
   
   return (
@@ -76,23 +66,14 @@ export default component$(() => {
         
         <div class="offcanvas-body">
 
-        {/*
-        
-        <div>
-          <Child state={store} />
-          <button id="add" onClick$={() => store.count++}>
-            +
-          </button>
-        </div>
-        
-        */}
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="button" onClick$={()=> {constants.cartProducts.length = 0; cartQty.length = 0;}} class="btn btn-primary btn-sm"><i class="bi bi-cart-fill"></i> Clear Cart</button>
               </div>
+
               <Display cartItems={store} />
               
               <div class="cart-footer text-right">
-                  <a href="page-checkout.html" class="btn btn-success my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
+                  <a href="#" class="btn btn-success my-1" onClick$={()=> { getFinalArray(constants.cartProducts, cartQty)}}>Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
               </div>
             
           
@@ -101,21 +82,6 @@ export default component$(() => {
   );
 });
   
-export const Child = component$((props: { state: State }) => {
-  console.log('<Child> render');
-  return (
-    <div>
-      <div id="child">{props.state.count}</div>
-      <GrandChild state={props.state} />
-    </div>
-  );
-});
-
-export const GrandChild = component$((props: { state: State }) => {
-  console.log('<GrandChild> render');
-  return <div id="debounced">Debounced: {props.state.debounced}</div>;
-});
-
 export const Display = component$((props: {cartItems: any}) => {
   
   //constants.cartCount = props.cartItems.data?.length;
@@ -219,20 +185,6 @@ export const Display = component$((props: {cartItems: any}) => {
   )
 });
 
-
-export function productCollection(store: productsCollectin) {
-  //store.count++;
-  //store.data = constants.cartProducts == [] ? [] : constants.cartProducts;
-  //console.log(store);
-  //console.log(store.map((a)=> (a)));
-  //return store.map((a)=> (a));
-  /*
-  store.data = constants.cartProducts;
-  console.log(store.data.map((a)=> (a)));
-  return store.data.map((a)=> (a));
-  */
-}
-
 export function getTotal(item, qty){
   let array=[];
   array.push(item?.map((a)=>(a.price)*(qty[item.indexOf(a)] == null | undefined ? 1 : qty[item.indexOf(a)])))
@@ -244,9 +196,28 @@ export function getTotal(item, qty){
 
 function myFunc(total, num) {
   return total + num;
-} 
+}
 
-
+export function getFinalArray(item, qty){
+  let order=[];
+  let finalOrder=[];
+  order.push(item?.map((a)=>(a.price)*(qty[item.indexOf(a)] == null | undefined ? 1 : qty[item.indexOf(a)])))
+  let ab = order[0]?.reduce(myFunc, 0 );
+  finalOrder.push(item?.map((b) => (
+    {
+      title: (b.title),
+      description: (b.description),
+      quantity: (qty[item.indexOf(b)] == null | undefined ? 1 : qty[item.indexOf(b)]),
+      price: (b.price),
+      product_total: ((b.price)*(qty[item.indexOf(b)] == null | undefined ? 1 : qty[item.indexOf(b)])),
+      grand_total: ab
+    } 
+    )
+  ));
+  
+  console.log(finalOrder);
+  return finalOrder;
+}
 
 export function getCart(item){
   cartItems(item.product);
@@ -254,23 +225,14 @@ export function getCart(item){
 
 export function cartItems(items){
   
-  //console.log(constants.cartProducts.map((a)=> (a)))
-  
   if( !constants.cartProducts.find(c => checkCartItem(c) == checkCartItem(items) ) ){
     constants.cartProducts.push(items);
-      //console.log(constants.cartProducts);
       constants.cartCount = undefined | null ? 0 : getCartItems(constants.cartProducts);
-      //productCollection(store.count);
-      //constants.cartCount = getCartItems(constants.cartProducts);
-    //console.log(constants.cartCount);
 
   } else {
     alert("Please update the quantity. Product already added.");
   }
-  
-
-  
-  return Array.isArray(constants.cartProducts) ? constants.cartProducts.map((repo) => repo) : null;
+  return Array.isArray(constants.cartProducts) ? constants.cartProducts.map((products) => products) : null;
 
 }
 
