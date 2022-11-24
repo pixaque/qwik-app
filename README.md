@@ -39,19 +39,19 @@ Inside your project, you'll see the following directory structure:
 ## Installation and getting started.
 
 ```shell
-git clone https://github.com/pixaque/qwik-cart.git # or `yarn preview`
+git clone https://github.com/pixaque/qwik-cart.git
 ```
 
 then 
 
 ```shell
-npm install # or `yarn preview`
+npm install
 ```
 
 then
 
 ```shell
-npm start # or `yarn preview`
+npm start
 ```
 
 ## Production
