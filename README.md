@@ -23,24 +23,17 @@ Inside your project, you'll see the following directory structure:
 ## Special Thanks
 
 ```shell
-`
+
 [For Providing dummy data] https://dummyjson.com/
-``
 
-```shell
 [For providing dummy data] https://github.com/Ovi/DummyJSON
-``
 
-``shell
 [Qwik team for helping regarding some minor issues.] http://qwik.builder.io/
-``
 
-```shell
 [For providing some beautiful images.] https://unsplash.com/
-``
 
-``shell
 [Bootstrap 5.2] https://getbootstrap.com/docs/5.2/getting-started/introduction/
+
 ```
 
 ## Installation and getting started.
