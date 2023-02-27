@@ -6,7 +6,8 @@
   },
   "private": true,
   "scripts": {
-    "build": "qwik build",
+    "dev": "qwik",
+    "build": "npm run qwik add",
     "start": "npm start"
   },
   "devDependencies": {
